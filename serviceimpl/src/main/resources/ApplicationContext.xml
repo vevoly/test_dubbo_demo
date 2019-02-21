@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <!-- 扫描注释 -->
+    <context:component-scan base-package="com.jevoly"/>
+    <!-- 使用dubbo的另外一个原因，可以和spring无缝结合 -->
+    <!-- 目的:
+        找到注册中心，告诉它我是谁，我的端口号是多少
+    -->
+    <!-- 配置别名，目的是在后台可以看到这个服务的别名，好区分到底是谁 -->
+    <dubbo:application name="test1"/>
+    <!-- 2 配置注册中心 -->
+    <dubbo:registry address="192.168.1.100:2181" protocol="zookeeper" />
+    <!-- 告诉注册中心我是谁
+    ref 代表具体发布哪个服务 -->
+    <dubbo:service interface="com.jevoly.testdubbo.TestService" ref="testServiceImpl" timeout="6000"/>
+    <!-- 配置我的端口， 因为消费者要想连接我们，必须通过ip和端口进行访问，
+    ip：我们在连接注册中心的时候，注册中心已经知道我们的ip，但端口却不知道。
+    port：端口可以随便写，但不可以被占用，一个dubbo对外发布的时候必须占用一个端口-->
+    <dubbo:protocol name="dubbo" port="12345"/>
+    
+</beans>
