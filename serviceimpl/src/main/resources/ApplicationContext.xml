@@ -18,7 +18,7 @@
     <dubbo:registry address="192.168.1.100:2181" protocol="zookeeper" />
     <!-- 告诉注册中心我是谁
     ref 代表具体发布哪个服务 -->
-    <dubbo:service interface="com.jevoly.testdubbo.TestService" ref="testServiceImpl" timeout="6000"/>
+    <dubbo:service interface="com.jevoly.testdubbo.TestService" ref="testServiceImpl" timeout="6000" />
     <!-- 配置我的端口， 因为消费者要想连接我们，必须通过ip和端口进行访问，
     ip：我们在连接注册中心的时候，注册中心已经知道我们的ip，但端口却不知道。
     port：端口可以随便写，但不可以被占用，一个dubbo对外发布的时候必须占用一个端口-->
